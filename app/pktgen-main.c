@@ -369,7 +369,12 @@ sig_handler(int v __rte_unused)
 
 	free (strings);
 
-	exit(-1);
+	if (v == SIGSEGV) {
+		signal(v, SIG_DFL);
+		kill(getpid(), v);
+	} else {
+		exit(-1);
+	}
 }
 
 #ifdef LUA_ENABLED
