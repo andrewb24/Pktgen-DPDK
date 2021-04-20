@@ -2314,6 +2314,11 @@ enable_vlan(port_info_t *info, uint32_t onOff)
 void
 single_set_vlan_id(port_info_t *info, uint16_t vlanid)
 {
+	if (vlanid != DEFAULT_VLAN_ID) {
+		rte_eth_dev_vlan_filter(info->pid, info->vlanid, 0);
+		rte_eth_dev_vlan_filter(info->pid, vlanid, 1);
+	}
+
 	info->vlanid = vlanid;
 	info->seq_pkt[SINGLE_PKT].vlanid = info->vlanid;
 	pktgen_packet_ctor(info, SINGLE_PKT, -1);
