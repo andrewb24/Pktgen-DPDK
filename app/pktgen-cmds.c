@@ -3854,6 +3854,19 @@ range_set_vlan_id(port_info_t *info, char *what, uint16_t id)
 	else if (!strcmp(what, "start") )
 		info->range.vlan_id = id;
 	}
+
+	if (!strcmp(what, "inc") || !strcmp(what, "increment")) {
+		uint16_t vlanid, incr;
+
+		/* Make the increment at least 1 */
+		incr = RTE_MAX(info->range.vlan_id_inc, 1);
+
+		for (vlanid = info->range.vlan_id_min;
+		     vlanid <= info->range.vlan_id_max;
+		     vlanid += incr) {
+			rte_eth_dev_vlan_filter(info->pid, vlanid, 1);
+		}
+	}
 }
 
 
