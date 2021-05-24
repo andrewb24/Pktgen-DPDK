@@ -485,8 +485,8 @@ static __inline__ int
 pktgen_has_work(void)
 {
 	if (!get_map(pktgen.l2p, RTE_MAX_ETHPORTS, rte_lcore_id())) {
-		pktgen_log_warning("Nothing to do on lcore %d: exiting",
-		                   rte_lcore_id());
+		//pktgen_log_warning("Nothing to do on lcore %d: exiting",
+		//                   rte_lcore_id());
 		return 1;
 	}
 	return 0;
